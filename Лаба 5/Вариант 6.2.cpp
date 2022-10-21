@@ -32,12 +32,11 @@ int main()
 	ifstream in("input.txt"); // имя файла и спецификатор (для чтения)
 	ofstream out("output.txt"); // имя файла и спецификатор (для вывода)
 	in >> N;
-	int i = 0;
 	while (!in.eof()) //бежим по файлу 
 	{
 		int c = 0; // счетчик сочетаний
-		in >> wordReading[i]; // считываем слово
-		word = wordReading[i]; // для дальнейшего исследования самого слова
+		in >> wordReading[numberOfWordsInFile]; // считываем слово
+		word = wordReading[numberOfWordsInFile]; // для дальнейшего исследования самого слова
 		numberOfWordsInFile++; // считаем количество слов в файле
 		while (ispunct(word[word.length() - 1])) // проверяем наличие знаков препинания на конце слова
 		{
@@ -47,21 +46,24 @@ int main()
 		{
 			for (int sonsonateNum = 0; sonsonateNum < 42; sonsonateNum++) // бежим по согласным
 			{
-				for (int sonsonateNumTwo = 0; sonsonateNumTwo < 42; sonsonateNumTwo++) // бежим по согласным
+				if (word[letterNum] == consonates[sonsonateNum])
 				{
-
-					if (word[letterNum] == consonates[sonsonateNum] and word[letterNum - 1] == consonates[sonsonateNumTwo])
+					for (int sonsonateNumTwo = 0; sonsonateNumTwo < 42; sonsonateNumTwo++) // бежим по согласным
 					{
-						c++;
-						consonatesCount = true; // нашлось хотя бы одно сочетание
-					}
 
+						if (word[letterNum] == consonates[sonsonateNum] and word[letterNum - 1] == consonates[sonsonateNumTwo])
+						{
+							c++;
+							consonatesCount = true; // нашлось хотя бы одно сочетание
+						}
+
+					}
 				}
 			}
-			numOkWords[i] = c;
+			numOkWords[numberOfWordsInFile] = c;
 		}
-		okWords[i] = word;
-		i = i + 1; // берем следующее слово
+		okWords[numberOfWordsInFile] = word;
+		numberOfWordsInFile++; // берем следующее слово
 
 	}
 	if (consonatesCount = true) // сочетания нашлись
@@ -97,6 +99,6 @@ int main()
 	{
 		cout << "В тексте нет сочетаний";
 	}
-	out << "Кодовое слово: пирог";
+	cout << "Кодовое слово: все ок";
 	return 0;
 }
