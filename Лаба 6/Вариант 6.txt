@@ -1,0 +1,128 @@
+/*Дана целочисленная матрица {Aij}i=1...n;j=1..n ,
+n<=100. Если в матрице есть еще один элемент, 
+равный ее максимальному элементу, 
+упорядочить строки матрицы по убыванию 
+количества простых чисел среди элементов строк.*/
+
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int isPrime(int notPrime, int number, int numberOfPrimeInLine) // определяем простое число или нет
+{
+	notPrime = 0;
+	for (int i = 2; i <= sqrt(number); i++)
+	{
+		if ((number % i) == 0)
+		{
+			notPrime = 1; // число не простое
+		}
+	}
+	return notPrime;
+}
+
+void fileIn(ifstream& in, int numReading[], int S) //читаем файл
+{
+	for (int j = 0; j < S; j++)
+	{
+		in >> numReading[j];
+	}
+}
+
+void fileOut(ofstream& out, int numOk[], int M, int N)// выводим файл
+{
+	for (int k = 0; k < (M*N); k++)
+	{
+		out << numOk[k] << " ";
+		cout << numOk[k] << " ";
+		if ((k+1) % N == 0)
+		{
+			out << '\n';
+			cout << '\n';
+		}
+	}
+
+}
+
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+	ifstream in("input.txt"); // имя файла и спецификатор (для чтения)
+	ofstream out("output.txt"); // имя файла и спецификатор (для вывода)
+	int N, M; //количество столбцов и строк
+	in >> N;
+	in >> M;
+	int S = M * N; // колво элементов в матрице
+	int numReading[100];//для чтения файла
+	int number;
+	int numberOfPrimeInLine = 0;// количество простых в одной строке
+	bool flag = false;
+	int notPrime=1; // флаг на простое число
+	int numberOfPrime[100];
+	int numOk[100];//итоговый массив
+	int max = INT_MIN; // минимальная граница int для нахождения максимума
+	for (int null = 0; null < S; null++) // заполняем массивы нулями
+	{
+		numReading[null] = 0;
+		numOk[null] = 0;
+	}
+	fileIn(in, numReading, S); // читаем файл
+
+	for (int x = 0; x < (M * N); x++)//ищем максимум
+	{
+		if (numReading[x] > max) //условие максимума
+		{
+			max = numReading[x];
+		}
+	}
+	int maxCount = 0; // счетчик повторения максимума
+	for (int p = 0; p < (M * N); p++)//ищем максимум
+	{
+		if (numReading[p] == max)// максимум повторился
+		{
+			maxCount++;
+		}
+		if (maxCount>1)
+		{
+			flag = true;//флаг сработал
+		}
+	}
+	cout << "Максимум - " << flag << '\n';
+	if (flag)//флаг сработал - считаем количество простых
+	{
+		for (int u = 0; u < M * N; u++)//считаем кол-во в строке
+		{
+			number = numReading[u];
+			numberOfPrimeInLine += isPrime(notPrime, number, numberOfPrimeInLine);//счетчик простых
+			if ((u+1) % N == 0)// если строка закончилась:
+			{
+				numberOfPrime[(u + 1) % N]= numberOfPrimeInLine;//запоминаем кол-во простых
+				numberOfPrimeInLine = 0;// сбрасываем счетчик
+			}
+		}
+	}
+	for (int a = 1; a < N + 1; a++) // сортировка
+	{
+		int b = a;
+		while (b > 0 and numberOfPrime[b - 1] < numberOfPrime[b]) // бежим по элементам стоящим cлева, пока выполняется условие
+		{
+			swap(numberOfPrime[b], numberOfPrime[b - 1]);// меняемся местами с элементом стоящим слева
+			for (int z = 1; z < N+1; z++)
+			{
+				swap(numReading[b * N + z], numReading[(b - 1) * N + z]);
+			}
+			b = b - 1;
+		}
+	}
+
+	cout << '\n';
+	for (int h = 0; h < S; h++)
+	{
+		numOk[h] = numReading[h];
+	}
+
+	fileOut(out, numOk, N, M);
+
+	return 0;
+}
