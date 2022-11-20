@@ -1,6 +1,11 @@
+#all labs
 plan.txt
 input.txt
-oleg.txt
+
+#lab7
 image.jpeg
 image.png
 image.gif
+
+# CMake
+CMakeCache.txt
