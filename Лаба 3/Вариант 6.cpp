@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 using namespace std;
 
 
@@ -7,12 +7,12 @@ int main()
     setlocale(LC_ALL, "Russian");
     int N, sum = 0, max = INT_MIN, i = 0, j = 0;
     int G;
-    cout << "Ââåäèòå êîëè÷åñòâî ÷èñåë ïîñëåäîâàòåëüíîñòè:\n";
+    cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ‡Ð¸ÑÐµÐ» Ð¿Ð¾ÑÐ»ÐµÐ´Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ÑÑ‚Ð¸:\n";
     cin >> N;
     while (i < N)
     {
         i += 1;
-        cout << "Ââåäèòå ÷èñëî:\n";
+        cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾:\n";
         cin >> G;
         if (G < 0 and G % 7 == 0)
         {
@@ -26,16 +26,16 @@ int main()
     }
     if (max != INT_MIN)
     {
-        cout << "Ñóììà:\n";
+        cout << "Ð¡ÑƒÐ¼Ð¼Ð°:\n";
         cout << sum << endl;
-        cout << "Ìàêñèìàëüíîå çíà÷åíèå:\n";
+        cout << "ÐœÐ°ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ:\n";
         cout << max << endl;
-        cout << "Íîìåð ÷èñëà:\n";
+        cout << "ÐÐ¾Ð¼ÐµÑ€ Ñ‡Ð¸ÑÐ»Ð°:\n";
         cout << j << endl;
     }
     else
     {
-        cout << "×èñåë óäîâëåòâîðÿþùèõ óñëîâèþ íåò" << endl;
+        cout << "Ð§Ð¸ÑÐµÐ» ÑƒÐ´Ð¾Ð²Ð»ÐµÑ‚Ð²Ð¾Ñ€ÑÑŽÑ‰Ð¸Ñ… ÑƒÑÐ»Ð¾Ð²Ð¸ÑŽ Ð½ÐµÑ‚" << endl;
     }
 
     return 0;

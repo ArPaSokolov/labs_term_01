@@ -1,25 +1,30 @@
-/*Дана целочисленная матрица {Aij}i=1...n;j=1..n ,
-n<=100. Если в матрице есть еще один элемент,
-равный ее максимальному элементу,
-упорядочить строки матрицы по убыванию
-количества простых чисел среди элементов строк.*/
+п»ї/*Р”Р°РЅР° С†РµР»РѕС‡РёСЃР»РµРЅРЅР°СЏ РјР°С‚СЂРёС†Р° {Aij}i=1...n;j=1..n ,
+n<=100. Р•СЃР»Рё РІ РјР°С‚СЂРёС†Рµ РµСЃС‚СЊ РµС‰Рµ РѕРґРёРЅ СЌР»РµРјРµРЅС‚,
+СЂР°РІРЅС‹Р№ РµРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРјСѓ СЌР»РµРјРµРЅС‚Сѓ,
+СѓРїРѕСЂСЏРґРѕС‡РёС‚СЊ СЃС‚СЂРѕРєРё РјР°С‚СЂРёС†С‹ РїРѕ СѓР±С‹РІР°РЅРёСЋ
+РєРѕР»РёС‡РµСЃС‚РІР° РїСЂРѕСЃС‚С‹С… С‡РёСЃРµР» СЃСЂРµРґРё СЌР»РµРјРµРЅС‚РѕРІ СЃС‚СЂРѕРє.*/
 
 #include <iostream>
 #include <string>
 #include <fstream>
 using namespace std;
 
-void inF(ifstream& in, int numReading[50][50], int N, int M) //процедура чтения файла
+void inF(int numReading[50][50],int &N, int &M) //РїСЂРѕС†РµРґСѓСЂР° С‡С‚РµРЅРёСЏ С„Р°Р№Р»Р°
 {
+	ifstream in("input.txt"); // РёРјСЏ С„Р°Р№Р»Р° Рё СЃРїРµС†РёС„РёРєР°С‚РѕСЂ (РґР»СЏ С‡С‚РµРЅРёСЏ)
+	in >> N;//СЃС‚РѕР»Р±С†С‹
+	in >> M;//СЃС‚РѕРєРё
 	for (int inI = 0; inI < M; inI++)
 	{
 		for (int inJ = 0; inJ < N; inJ++)
 			in >> numReading[inI][inJ];
 	}
+	in.close();// Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 }
 
-void outF(ofstream& out, int numReading[50][50], int N, int M)// процедура выведения файла
+void outF(int numReading[50][50], int &N, int &M, int numberOfPrime[100])// РїСЂРѕС†РµРґСѓСЂР° РІС‹РІРµРґРµРЅРёСЏ С„Р°Р№Р»Р°
 {
+	ofstream out("output.txt"); // РёРјСЏ С„Р°Р№Р»Р° Рё СЃРїРµС†РёС„РёРєР°С‚РѕСЂ (РґР»СЏ РІС‹РІРѕРґР°)
 	for (int ofI = 0; ofI < M; ofI++)
 	{
 		for (int ofJ = 0; ofJ < N; ofJ++)
@@ -28,12 +33,15 @@ void outF(ofstream& out, int numReading[50][50], int N, int M)// процедура вывед
 			cout << numReading[ofI][ofJ] << " ";
 		}
 		out << '\n';
+		cout << "| " << numberOfPrime[ofI];
 		cout << '\n';
 	}
+	out.close();// Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 }
 
-int findMax(int numReading[50][50], int max, int M, int N) //поиск максимального
+int findMax(int numReading[50][50], int &N, int &M) //РїРѕРёСЃРє РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ
 {
+	int max = INT_MIN;
 	for (int mI = 0; mI < M; mI++)
 	{
 		for (int mJ = 0; mJ < N; mJ++)
@@ -47,93 +55,105 @@ int findMax(int numReading[50][50], int max, int M, int N) //поиск максимального
 	return max;
 }
 
-int ifPrime(int isPrime, int number) // определяем простое число или нет
+int ifPrime(int isPrime, int numReading[50][50], int &nI, int &nJ) // РѕРїСЂРµРґРµР»СЏРµРј РїСЂРѕСЃС‚РѕРµ С‡РёСЃР»Рѕ РёР»Рё РЅРµС‚
 {
-	isPrime = 1;// число простое
-	for (int i = 2; i <= sqrt(number); i++)
+	isPrime = 1;// С‡РёСЃР»Рѕ РїСЂРѕСЃС‚РѕРµ
+	for (int i = 2; i <= sqrt(numReading[nI][nJ]); i++)
 	{
-		if ((number % i) == 0)
+		if ((numReading[nI][nJ] % i) == 0)
 		{
-			isPrime = 0; // число не простое
+			isPrime = 0; // С‡РёСЃР»Рѕ РЅРµ РїСЂРѕСЃС‚РѕРµ
 		}
+	}
+	if (numReading[nI][nJ] == 1)
+	{
+		isPrime = 0; // С‡РёСЃР»Рѕ РЅРµ РїСЂРѕСЃС‚РѕРµ
 	}
 	return isPrime;
 }
 
-int ifPrime(int isPrime, double number) // определяем простое число или нет
+int ifPrime(int isPrime, double numReading[50][50], int& nI, int& nJ) // РѕРїСЂРµРґРµР»СЏРµРј РїСЂРѕСЃС‚РѕРµ С‡РёСЃР»Рѕ РёР»Рё РЅРµС‚
 {
-	isPrime = 0;// число не простое
+	isPrime = 0;// С‡РёСЃР»Рѕ РЅРµ РїСЂРѕСЃС‚РѕРµ
 	return isPrime;
 }
 
-string ifPrime(int a) // определяем простое число или нет
+string ifPrime(int a) // РѕРїСЂРµРґРµР»СЏРµРј РїСЂРѕСЃС‚РѕРµ С‡РёСЃР»Рѕ РёР»Рё РЅРµС‚
 {
-	string b = "простое";
+	string b = "РїСЂРѕСЃС‚РѕРµ";
 	for (int i = 2; i <= sqrt(a); i++)
 	{
 		if ((a % i) == 0)
 		{
-			b = "число не простое";
+			b = "С‡РёСЃР»Рѕ РЅРµ РїСЂРѕСЃС‚РѕРµ";
 		}
 	}
 	return b;
 }
 
-void decreasSort(int numberOfPrime[100], int numReading[50][50], int M, int N) // сортировка
+void decreasSort(int numberOfPrime[100], int numReading[50][50], int &N, int &M) // СЃРѕСЂС‚РёСЂРѕРІРєР°
 {
 	for (int sI = 0; sI < M; sI++)
 	{
 		int s = sI;
-		while (s > 0 and numberOfPrime[s - 1] < numberOfPrime[s]) // бежим по элементам стоящим cлева, пока выполняется условие
+		while (s > 0 and numberOfPrime[s - 1] < numberOfPrime[s]) // Р±РµР¶РёРј РїРѕ СЌР»РµРјРµРЅС‚Р°Рј СЃС‚РѕСЏС‰РёРј cР»РµРІР°, РїРѕРєР° РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ СѓСЃР»РѕРІРёРµ
 		{
-			swap(numberOfPrime[s], numberOfPrime[s - 1]);// меняем местами с элементом стоящим слева (бежим по количеству простых)
+			swap(numberOfPrime[s], numberOfPrime[s - 1]);// РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё СЃ СЌР»РµРјРµРЅС‚РѕРј СЃС‚РѕСЏС‰РёРј СЃР»РµРІР° (Р±РµР¶РёРј РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РїСЂРѕСЃС‚С‹С…)
 			for (int sJ = 0; sJ < N; sJ++)
-				swap(numReading[s][sJ], numReading[s - 1][sJ]);// меняем местами строки по числам
+				swap(numReading[s][sJ], numReading[s - 1][sJ]);// РјРµРЅСЏРµРј РјРµСЃС‚Р°РјРё СЃС‚СЂРѕРєРё РїРѕ С‡РёСЃР»Р°Рј
 			s = s - 1;
 		}
 	}
 }
 
+void testim(int &test1, int &test2)
+{
+	test1+=test2;
+	cout << test1 << " ";
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Rus");
-	ifstream in("input.txt"); // имя файла и спецификатор (для чтения)
-	ofstream out("output.txt"); // имя файла и спецификатор (для вывода)
-	int numReading[50][50]; // матрица
-	int numberOfPrimeInLine = 0; // количество простых в одной строке
-	int N, M; //количество столбцов и строк
-	int isPrime = 1; //счетчик простых чисел
-	in >> N;
-	in >> M;
-	int max = INT_MIN;
-	int numberOfPrime[100]; // массив для хранения количества простых чисел в каждой строке
-	int sortTrue = 0; //потребность в сортировке
+	int N, M; //РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ Рё СЃС‚СЂРѕРє
+	ifstream in("input.txt"); // РёРјСЏ С„Р°Р№Р»Р° Рё СЃРїРµС†РёС„РёРєР°С‚РѕСЂ (РґР»СЏ С‡С‚РµРЅРёСЏ)
+	ofstream out("output.txt"); // РёРјСЏ С„Р°Р№Р»Р° Рё СЃРїРµС†РёС„РёРєР°С‚РѕСЂ (РґР»СЏ РІС‹РІРѕРґР°)
+	int numReading[50][50]; // РјР°С‚СЂРёС†Р°
+	int numberOfPrimeInLine = 0; // РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃС‚С‹С… РІ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРµ
+	int isPrime = 1; //СЃС‡РµС‚С‡РёРє РїСЂРѕСЃС‚С‹С… С‡РёСЃРµР»
+	int numberOfPrime[100]; // РјР°СЃСЃРёРІ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РєРѕР»РёС‡РµСЃС‚РІР° РїСЂРѕСЃС‚С‹С… С‡РёСЃРµР» РІ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРµ
+	int sortTrue = 0; //РїРѕС‚СЂРµР±РЅРѕСЃС‚СЊ РІ СЃРѕСЂС‚РёСЂРѕРІРєРµ
 
-	inF(in, numReading, N, M); // считываем файл
+	inF(numReading, N, M); // СЃС‡РёС‚С‹РІР°РµРј С„Р°Р№Р»
+	int max = findMax(numReading, N, M); // РЅР°С…РѕРґРёРј РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
 
-	max = findMax(numReading, max, M, N); // находим максимальное значение
-
-	for (int nI = 0; nI < M; nI++) // считаем количество простых чисел в строках
+	for (int nI = 0; nI < M; nI++) // СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃС‚С‹С… С‡РёСЃРµР» РІ СЃС‚СЂРѕРєР°С…
 	{
 		for (int nJ = 0; nJ < N; nJ++)
 		{
-			int number = numReading[nI][nJ];
-			if (number == max) // проверяем на повтор максимального значения
-				sortTrue += 1; // максимальное значение повторилось
-			numberOfPrimeInLine += ifPrime(isPrime, number); // считаем количество простых в строке
+			if (numReading[nI][nJ] == max) // РїСЂРѕРІРµСЂСЏРµРј РЅР° РїРѕРІС‚РѕСЂ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ
+				sortTrue += 1; // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РїРѕРІС‚РѕСЂРёР»РѕСЃСЊ
+			numberOfPrimeInLine += ifPrime(isPrime, numReading, nI, nJ); // СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃС‚С‹С… РІ СЃС‚СЂРѕРєРµ
 		}
-		numberOfPrime[nI] = numberOfPrimeInLine; // строка закончилась -> запоминаем количество простых в ней
-		numberOfPrimeInLine = 0; // обновляем счетчик для следующей строки
+		numberOfPrime[nI] = numberOfPrimeInLine; // СЃС‚СЂРѕРєР° Р·Р°РєРѕРЅС‡РёР»Р°СЃСЊ -> Р·Р°РїРѕРјРёРЅР°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕСЃС‚С‹С… РІ РЅРµР№
+		numberOfPrimeInLine = 0; // РѕР±РЅРѕРІР»СЏРµРј СЃС‡РµС‚С‡РёРє РґР»СЏ СЃР»РµРґСѓСЋС‰РµР№ СЃС‚СЂРѕРєРё
 	}
 
-	if (sortTrue > 1)//максимальное повторилось -> сортируем
+	if (sortTrue > 1)//РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РїРѕРІС‚РѕСЂРёР»РѕСЃСЊ -> СЃРѕСЂС‚РёСЂСѓРµРј
 	{
-		decreasSort(numberOfPrime, numReading, M, N);
-		outF(out, numReading, N, M); //выводим полученную матрицу
+		decreasSort(numberOfPrime, numReading, N, M);
+		outF(numReading, N, M, numberOfPrime); //РІС‹РІРѕРґРёРј РїРѕР»СѓС‡РµРЅРЅСѓСЋ РјР°С‚СЂРёС†Сѓ
 	}
-	else // максимальное одно -> сортировка не нужна
+	else // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РѕРґРЅРѕ -> СЃРѕСЂС‚РёСЂРѕРІРєР° РЅРµ РЅСѓР¶РЅР°
 	{
-		outF(out, numReading, N, M); // выводим полученную матрицу
+		outF(numReading, N, M, numberOfPrime); // РІС‹РІРѕРґРёРј РїРѕР»СѓС‡РµРЅРЅСѓСЋ РјР°С‚СЂРёС†Сѓ
 	}
+	
+	
+	
+	int test1 = 1;
+	int test2 = 2;
+	testim (test1, test2);
+	cout << test1;
 	return 0;
 }
