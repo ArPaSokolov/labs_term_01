@@ -1,15 +1,15 @@
-#include <iostream>
+ï»¿#include <iostream>
 using namespace std;
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	cout << "Ââåäèòå çíà÷åíèå ñòîðîíû êóáà:\n";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñ‹ ÐºÑƒÐ±Ð°:\n";
 	short A;
 	cin >> A;
 	short V;
 	V = A * A * A;
-	cout << "Ïîëó÷åííîå çíà÷åíèå îáúåìà êóáà:\n";
+	cout << "ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐ¼Ð° ÐºÑƒÐ±Ð°:\n";
 	cout << V;
 	return 0;
 }
