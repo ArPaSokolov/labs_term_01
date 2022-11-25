@@ -1,9 +1,4 @@
-#all labs
-plan.txt
-input.txt
-
-#lab7
-
-
-# CMake
-CMakeCache.txt
+!help.png
+start.txt
+?*.png
+autorun.?*
