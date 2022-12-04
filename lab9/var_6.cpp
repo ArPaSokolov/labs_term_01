@@ -1,30 +1,30 @@
-/*Найти периметр треугольника. (сторона1, сторона2, сторона3)*/
+п»ї/*РќР°Р№С‚Рё РїРµСЂРёРјРµС‚СЂ С‚СЂРµСѓРіРѕР»СЊРЅРёРєР°. (СЃС‚РѕСЂРѕРЅР°1, СЃС‚РѕСЂРѕРЅР°2, СЃС‚РѕСЂРѕРЅР°3)*/
 
 #include <iostream>
 using namespace std;
 
-class triangle //класс
+class triangle //РєР»Р°СЃСЃ
 {
-private: //модификатор доступа
-	int A; //поле
-	int B; //поле
-	int C; //поле
-public: //модификатор доступа
-	void SetSides(int valueA, int valueB, int valueC) //(метод) задаем значение
+private: //РјРѕРґРёС„РёРєР°С‚РѕСЂ РґРѕСЃС‚СѓРїР°
+	int A; //РїРѕР»Рµ
+	int B; //РїРѕР»Рµ
+	int C; //РїРѕР»Рµ
+public: //РјРѕРґРёС„РёРєР°С‚РѕСЂ РґРѕСЃС‚СѓРїР°
+	void SetSides(int valueA, int valueB, int valueC) //(РјРµС‚РѕРґ) Р·Р°РґР°РµРј Р·РЅР°С‡РµРЅРёРµ
 	{
 		A = valueA;
 		B = valueB;
 		C = valueC;
 	}
-	int GetA() // (метод) получаем значение
+	int GetA() // (РјРµС‚РѕРґ) РїРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёРµ
 	{
 		return A;
 	}
-	int GetB() //(метод) получаем значение
+	int GetB() //(РјРµС‚РѕРґ) РїРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёРµ
 	{
 		return B;
 	}
-	int GetC() //(метод) получаем значение
+	int GetC() //(РјРµС‚РѕРґ) РїРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёРµ
 	{
 		return C;
 	}
@@ -52,7 +52,7 @@ int main()
 {
 	cout << "Perimetr is: "<< "Enter 3 sides:" << endl;
 	
-	triangle ABC; //обЪект
+	triangle ABC; //РѕР±РЄРµРєС‚
 	int valueA;
 	int valueB;
 	int valueC;
