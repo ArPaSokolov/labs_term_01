@@ -1,4 +1,5 @@
+#lab7
 ?*.png
 !help.png
-start.txt
-autorun.?*
+image.gif
+image.png
