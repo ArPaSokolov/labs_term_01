@@ -9,18 +9,18 @@ int main()
     // задаем окно
     int Width = 1000;
     int Height = 600;
-    sf::RenderWindow window(sf::VideoMode(Width, Height), "lab10 works!");
+    sf::RenderWindow window(sf::VideoMode(Width, Height), "10_lab works!");
 
     myclass::Figures Rect;
     // задаем прямоугольник
-    Rect.SetRect(50, -199, 100, 600, sf::Color::Blue, 100, 100); // скорость, позииця, цвет, стороны
+    Rect.SetRect(9999, -9999, 400, 600, sf::Color::Blue, 100, 100); // скорость, позииця, цвет, стороны
     sf::RectangleShape rectangle{ { Rect.A * 1.0f, Rect.B * 1.0f } };
     rectangle.setPosition({ Rect.x0 * 1.0f, Rect.y0 * 1.0f });
     rectangle.setFillColor(Rect.color);
 
     myclass::Figures Circle;
     // задаем круг
-    Circle.SetCircle(60, -99, 500, 500, sf::Color::Red, 50); // скорость, позииця, цвет, стороны 
+    Circle.SetCircle(2600, -99, 500, 400, sf::Color::Red, 50); // скорость, позииця, цвет, стороны 
     sf::CircleShape shape(Circle.R * 1.0f);
     shape.setPosition({ Circle.x0 * 1.0f, Circle.y0 * 1.0f });
     shape.setFillColor(Circle.color);
@@ -59,15 +59,20 @@ int main()
         // воткнулся вправо
         if (Rect.flag == 1)
         {
-            Rect.h = (abs(Rect.v_y)*(Rect.xn - Width + Rect.B))/(abs(Rect.v_x));
-            rectangle.setPosition({ (Width - Rect.A) * 1.0f, (Rect.yn + Rect.h) * 1.0f });
+
+            Rect.h = (abs(Rect.v_y) * (Rect.xn - Width - Rect.B)) / (abs(Rect.v_x));
+            rectangle.setPosition({ (Width - Rect.B) * 1.0f, (Rect.yn + Rect.h) * 1.0f });
         }
 
-        // воткнулся влево
+        // воткнулся в угол
         if (Rect.flag == 2)
         {
             Rect.w = (abs(Rect.v_x) * Rect.y0)/(abs(Rect.v_y));
             rectangle.setPosition({ (Rect.x0 + Rect.w) * 1.0f, 0 * 1.0f });
+        }
+        if (Rect.flag == 3)
+        {
+            rectangle.setPosition({ (Width - Rect.B) * 1.0f, 0 * 1.0f });
         }
 
 
@@ -85,13 +90,17 @@ int main()
         }
         if (Circle.flag == 1)
         {
-            Circle.h = (abs(Rect.v_y) * (Circle.xn - Width + 2 * Circle.R)) / (abs(Circle.v_x));
-            shape.setPosition({ (Width - Circle.A) * 1.0f, (Circle.yn + Circle.h) * 1.0f });
+            Circle.h = (abs(Circle.v_y) * (Circle.xn - Width - 2 * Circle.R)) / (abs(Circle.v_x));
+            shape.setPosition({ (Width - 2 * Circle.R) * 1.0f, (Circle.yn + Circle.h) * 1.0f });
         }
         if (Circle.flag == 2)
         {
             Circle.w = (abs(Circle.v_x) * Circle.y0) / (abs(Circle.v_y));
             shape.setPosition({ (Circle.x0 + Circle.w) * 1.0f, 0 * 1.0f });
+        }
+        if (Circle.flag == 3)
+        {
+            shape.setPosition({ (Width - 2 * Circle.R) * 1.0f, 0 * 1.0f });
         }
 
 

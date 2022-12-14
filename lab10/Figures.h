@@ -47,26 +47,36 @@ namespace myclass
 		}
 		void RectFlag(int Width,int Height)
 		{
+			// втыкается в правый верхний угол
+			if ((xn >= Width - B) && (yn <= 0))
+			{
+				flag = 3;
+			}
 			// втыкается вправо
-			if (xn >= Width - A)
+			else if (xn >= Width - B)
 			{
 				flag = 1;
 			}
 			// втыкается вверх
-			if (yn <= 0)
+			else if (yn <= 0)
 			{
 				flag = 2;
 			}
 		}
 		void CircleFlag(int Width, int Height)
 		{
+			// втыкается в правый верхний угол
+			if ((xn >= Width - 2*R) && (yn <= 0))
+			{
+				flag = 3;
+			}
 			// втыкается вправо
-			if (xn >= Width - 2*R)
+			else if (xn >= Width - 2*R)
 			{
 				flag = 1;
 			}
 			// втыкается вверх
-			if (yn <= 0)
+			else if (yn <= 0)
 			{
 				flag = 2;
 			}
