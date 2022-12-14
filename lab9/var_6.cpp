@@ -10,6 +10,12 @@ private: //модификатор доступа
 	int B; //поле
 	int C; //поле
 public: //модификатор доступа
+	triangle(int valueA, int valueB, int valueC) // constructor
+	{
+		A = valueA;
+		B = valueB;
+		C = valueC;
+	}
 	void SetSides(int valueA, int valueB, int valueC) //(метод) задаем значение
 	{
 		A = valueA;
@@ -30,15 +36,8 @@ public: //модификатор доступа
 	}
 	int Perimetr()
 	{
-		if ((A + B > C) and (A + C > B) and (B + C > A))
-		{
-			int valueP = A + B + C;
-			return valueP;
-		}
-		else
-		{
-			return 0;
-		}
+		int valueP = A + B + C;
+		return valueP;
 	}
 	void Show()
 	{
@@ -46,21 +45,32 @@ public: //модификатор доступа
 		cout << "B is: " << B << endl;
 		cout << "C is: " << C << endl;
 	}
+	~triangle() // destructor
+	{
+		cout << "Destruction succeded!" << endl;
+	}
 
 };
 int main()
 {
-	cout << "Perimetr is: "<< "Enter 3 sides:" << endl;
-	
-	triangle ABC; //обЪект
+	cout << "Enter 3 sides:" << endl;
 	int valueA;
 	int valueB;
 	int valueC;
 	cin >> valueA;
 	cin >> valueB;
 	cin >> valueC;
+	while (valueA <= 0 or valueC <= 0 or valueB <= 0 or (valueA + valueB <= valueC) or (valueA + valueC <= valueB) or (valueB + valueC <= valueA))
+	{
+		cout << "The values are incorrect. Enter new ones:" << endl;
+		cin >> valueA;
+		cin >> valueB;
+		cin >> valueC;
+	}
 
-	ABC.SetSides(valueA, valueB, valueC);
+	triangle ABC(valueA, valueB, valueC); //обЪект
+
+	/*ABC.SetSides();*/
 	cout << "Perimetr is: " << ABC.Perimetr() << endl;
 	ABC.Show();
 
