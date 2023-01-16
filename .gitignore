@@ -1,5 +1,9 @@
-#lab7
+#lab_07
 ?*.png
 !help.png
 image.gif
 image.png
+
+#lab_10
+!calculations.png
+
