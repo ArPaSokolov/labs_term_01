@@ -5,6 +5,9 @@
 CMakeFiles
 *.vs
 ext
+*.dir
+Debug
+x64
 
 #lab_07
 ?*.png
