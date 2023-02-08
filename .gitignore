@@ -8,6 +8,7 @@ ext
 *.dir
 Debug
 x64
+!CMakeLists.txt
 
 #lab_07
 ?*.png
