@@ -1,3 +1,11 @@
+*.vcxproj*
+*.cmake
+*.txt
+*.sln
+CMakeFiles
+*.vs
+ext
+
 #lab_07
 ?*.png
 !help.png
@@ -6,4 +14,7 @@ image.png
 
 #lab_10
 !calculations.png
+mrBelka.txt
+build
+
 

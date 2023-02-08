@@ -6,6 +6,7 @@
 
 int main()
 {
+
     // задаем окно
     int Width = 1000;
     int Height = 600;
@@ -13,14 +14,14 @@ int main()
 
     myclass::Figures Rect;
     // задаем прямоугольник
-    Rect.SetRect(9999, -9999, 400, 600, sf::Color::Blue, 100, 100); // скорость, позииця, цвет, стороны
+    Rect.SetRect(20, -69, 400, 600, sf::Color::Blue, 100, 100); // скорость, позииця, цвет, стороны
     sf::RectangleShape rectangle{ { Rect.A * 1.0f, Rect.B * 1.0f } };
     rectangle.setPosition({ Rect.x0 * 1.0f, Rect.y0 * 1.0f });
     rectangle.setFillColor(Rect.color);
 
     myclass::Figures Circle;
     // задаем круг
-    Circle.SetCircle(2600, -99, 500, 400, sf::Color::Red, 50); // скорость, позииця, цвет, стороны 
+    Circle.SetCircle(20, -99, 100, 400, sf::Color::Red, 50); // скорость, позииця, цвет, стороны 
     sf::CircleShape shape(Circle.R * 1.0f);
     shape.setPosition({ Circle.x0 * 1.0f, Circle.y0 * 1.0f });
     shape.setFillColor(Circle.color);
@@ -43,6 +44,8 @@ int main()
                 window.close();
         }
         window.clear(sf::Color::Green);
+
+        /*std::this_thread::sleep_for(std::chrono::seconds(2));*/
 
         // определяем положение фигур
         Rect.SetCoords(Width);
@@ -112,7 +115,7 @@ int main()
 
         // задержка
         /*std::this_thread::sleep_for(std::chrono::milliseconds(100));*/
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
     return 0; 
 }
